@@ -946,7 +946,9 @@ class ReactImageLightbox extends Component {
     this.moveStartOffsetX = 0;
     this.moveStartOffsetY = 0;
     // Snap image back into frame if outside max offset range
-    const maxOffsets = this.getMaxOffsets();
+    const maxOffsets = !this.props.moveImageFreely
+      ? this.getMaxOffsets()
+      : { minX: -Infinity, maxX: Infinity, minY: -Infinity, maxY: Infinity };
     const nextOffsetX = Math.max(
       maxOffsets.minX,
       Math.min(maxOffsets.maxX, this.state.offsetX)
@@ -955,6 +957,7 @@ class ReactImageLightbox extends Component {
       maxOffsets.minY,
       Math.min(maxOffsets.maxY, this.state.offsetY)
     );
+
     if (
       nextOffsetX !== this.state.offsetX ||
       nextOffsetY !== this.state.offsetY
@@ -1221,11 +1224,18 @@ class ReactImageLightbox extends Component {
 
   requestMove(direction, event) {
     // Reset the zoom level on image move
-    const nextState = {
-      zoomLevel: MIN_ZOOM_LEVEL,
-      offsetX: 0,
-      offsetY: 0,
+    let nextState = {
+      zoomLevel: this.state.zoomLevel,
+      offsetX: this.state.offsetX,
+      offsetY: this.state.offsetY,
     };
+
+    if (this.props.resetZoomBetweenFrames)
+      nextState = {
+        zoomLevel: MIN_ZOOM_LEVEL,
+        offsetX: 0,
+        offsetY: 0,
+      };
 
     // Enable animated states
     if (
@@ -1770,6 +1780,12 @@ ReactImageLightbox.propTypes = {
 
   // custom loader
   loader: PropTypes.node,
+
+  // Allow to keep image zoomed between srcs
+  resetZoomBetweenFrames: PropTypes.bool,
+
+  // move image arround all the modal
+  moveImageFreely: PropTypes.bool,
 };
 
 ReactImageLightbox.defaultProps = {
@@ -1806,6 +1822,8 @@ ReactImageLightbox.defaultProps = {
   zoomOutLabel: 'Zoom out',
   imageLoadErrorMessage: 'This image failed to load',
   loader: undefined,
+  resetZoomBetweenFrames: false,
+  moveImageFreely: false,
 };
 
 export default ReactImageLightbox;
