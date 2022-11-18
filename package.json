@@ -1,6 +1,6 @@
 {
-  "name": "react-image-lightbox",
-  "version": "6.0.0",
+  "name": "@smartex/react-image-lightbox",
+  "version": "6.1.1",
   "description": "A lightbox component for React.js",
   "scripts": {
     "build": "rollup -c",
@@ -10,7 +10,7 @@
     "start": "parcel examples/cats/index.html",
     "lint": "eslint .",
     "prettier": "prettier --write \"./**/*.{md,js,css}\" \"!./{build,dist}/**\" \"!./style.css*\"",
-    "prepublishOnly": "yarn run lint && yarn run test && yarn run build",
+    "prepublishOnly": "yarn run lint  && yarn run build",
     "test": "jest",
     "test:watch": "jest --watchAll",
     "deploy": "yarn run build:demo && gh-pages -d build",
@@ -92,5 +92,8 @@
     "react-component",
     "image",
     "lightbox"
-  ]
+  ],
+  "publishConfig": {
+    "@smartex:registry": "https://gitlab.com/api/v4/projects/39448411/packages/npm/"
+  }
 }
