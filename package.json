@@ -92,8 +92,5 @@
     "react-component",
     "image",
     "lightbox"
-  ],
-  "publishConfig": {
-    "@smartex:registry": "https://gitlab.com/api/v4/projects/39448411/packages/npm/"
-  }
+  ]
 }
